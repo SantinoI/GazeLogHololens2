@@ -13,12 +13,12 @@ namespace Microsoft.MixedReality.Toolkit.Input
         // Start is called before the first frame update
 
         private int currentscore = 0;
-        private GameObject s;
+        //private GameObject s;
         private GameObject c1;
-        public TextMeshPro Origin;
-        public TextMeshPro Direction;
-        public TextMeshPro X_2D;
-        public TextMeshPro Y_2D;
+        //public TextMeshPro Origin;
+        //public TextMeshPro Direction;
+        //public TextMeshPro X_2D;
+        //public TextMeshPro Y_2D;
 
         private float time = 0.0f;
         private float global_time = 0.0f;
@@ -28,24 +28,25 @@ namespace Microsoft.MixedReality.Toolkit.Input
         Camera cam;
         void Start()
         {
-            s = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            s.gameObject.transform.localScale = new Vector3(0.03F, 0.03F, 0.03F);
-            s.GetComponent<MeshRenderer>().material.color = Color.red;
+            //Pallino rosso sul gaze
+            //s = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            //s.gameObject.transform.localScale = new Vector3(0.03F, 0.03F, 0.03F);
+            //s.GetComponent<MeshRenderer>().material.color = Color.red;
 
 
-            Origin = GameObject.Find("Origin").GetComponent<TextMeshPro>();
-            Direction = GameObject.Find("Direction").GetComponent<TextMeshPro>();
-            X_2D = GameObject.Find("X_2D").GetComponent<TextMeshPro>();
-            Y_2D = GameObject.Find("Y_2D").GetComponent<TextMeshPro>();
+            //Origin = GameObject.Find("Origin").GetComponent<TextMeshPro>();
+            //Direction = GameObject.Find("Direction").GetComponent<TextMeshPro>();
+            //X_2D = GameObject.Find("X_2D").GetComponent<TextMeshPro>();
+            //Y_2D = GameObject.Find("Y_2D").GetComponent<TextMeshPro>();
 
             cam = GameObject.Find("Main Camera").GetComponent<Camera>();
 
 
 
             //pallino giallo
-            c1 = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-            c1.gameObject.transform.localScale = new Vector3(0.03F, 0.03F, 0.03F);
-            c1.GetComponent<MeshRenderer>().material.color = Color.yellow;
+            //c1 = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+            //c1.gameObject.transform.localScale = new Vector3(0.03F, 0.03F, 0.03F);
+            //c1.GetComponent<MeshRenderer>().material.color = Color.yellow;
 
 
             //Al momento i file di log sono sempre resettati ad ogni avvio
@@ -92,22 +93,22 @@ namespace Microsoft.MixedReality.Toolkit.Input
                 //Debug.Log("Gaze is looking in direction: " + eyeGazeProvider.GazeDirection);
                 //Debug.Log("Gaze origin is: " + eyeGazeProvider.GazeOrigin);
             }
-            s.transform.position =
+            /*s.transform.position =
                 CoreServices.InputSystem.EyeGazeProvider.GazeOrigin +
                 CoreServices.InputSystem.EyeGazeProvider.GazeDirection.normalized;
+            */
+            //c1.transform.position = cam.ViewportToWorldPoint(new Vector3(1, 1, 1));// PASSO DALLE COORDINATE VIEW PORT(DOVE 1,1 è IN ALTO A DX A QUELLE DELLA CAMERA
 
-            c1.transform.position = cam.ViewportToWorldPoint(new Vector3(1, 1, 1));// PASSO DALLE COORDINATE VIEW PORT(DOVE 1,1 è IN ALTO A DX A QUELLE DELLA CAMERA
-
-            Origin.text = "Gaze Origin: " + CoreServices.InputSystem.EyeGazeProvider.GazeOrigin;
-            Direction.text = "Gaze Direction: " + CoreServices.InputSystem.EyeGazeProvider.GazeDirection.normalized;
+            //Origin.text = "Gaze Origin: " + CoreServices.InputSystem.EyeGazeProvider.GazeOrigin;
+            //Direction.text = "Gaze Direction: " + CoreServices.InputSystem.EyeGazeProvider.GazeDirection.normalized;
 
             Vector3 viewPos = cam.WorldToScreenPoint(CoreServices.InputSystem.EyeGazeProvider.GazeOrigin +
                 CoreServices.InputSystem.EyeGazeProvider.GazeDirection.normalized); // PASSO DALLE COORDINATE DEL GAZE(WORLD) AI PIXEL DELL'IMMAGINE
 
-            X_2D.text = "X (2D): " + (viewPos.x * 1);
-            Y_2D.text = "Y (2D): " + (viewPos.y * 1);
+            //X_2D.text = "X (2D): " + (viewPos.x * 1);
+            //Y_2D.text = "Y (2D): " + (viewPos.y * 1);
 
-            Vector3 posPallinoGiallo = cam.WorldToScreenPoint(c1.transform.position);
+            //Vector3 posPallinoGiallo = cam.WorldToScreenPoint(c1.transform.position);
 
             //Debug.Log(posPallinoGiallo);
             //Debug.Log(cam.pixelWidth,cam.pixelHeight)

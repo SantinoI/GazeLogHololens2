@@ -17,7 +17,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
         static readonly float MaxRecordingTime = 15.0f;
         private float time;
         float countSec = 0;
-
+        static string timestamp;
 
         VideoCapture m_VideoCapture = null;
         float m_stopRecordingTimer = float.MaxValue;
@@ -27,6 +27,9 @@ namespace Microsoft.MixedReality.Toolkit.Input
         {
             cam = GameObject.Find("Main Camera").GetComponent<Camera>();
             Debug.Log("sto iniziando");
+            timestamp = DateTime.Now.ToString(@"MM\/dd\/yyyy h\:mm tt").Replace(":", "-").Replace(" ", "_").Replace("/", "-");
+            Debug.Log(timestamp);
+            System.IO.File.WriteAllText(LogName(), String.Empty);
             StartVideoCaptureTest();
 
         }
@@ -38,8 +41,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
             Vector3 viewPos = cam.WorldToScreenPoint(CoreServices.InputSystem.EyeGazeProvider.GazeOrigin +
                    CoreServices.InputSystem.EyeGazeProvider.GazeDirection.normalized); // PASSO DALLE COORDINATE DEL GAZE(WORLD) AI PIXEL DELL'IMMAGINE
 
-            time += Time.deltaTime;
-            //System.IO.File.AppendAllText(LogName(), time.ToString() + "  " + "X: " + viewPos.x + "   " + "Y: " + viewPos.y + Environment.NewLine);
+            time += Time.deltaTime;;
             if (time > 1)
             {
                 System.IO.File.AppendAllText(LogName(), countSec.ToString() + "  " + "X: " + viewPos.x + "   " + "Y: " + viewPos.y + Environment.NewLine);
@@ -100,8 +102,8 @@ namespace Microsoft.MixedReality.Toolkit.Input
             
 
             Debug.Log("Started Video Capture Mode!");
-            string timeStamp = Time.time.ToString().Replace(".", "").Replace(":", "");
-            string filename = string.Format("TestVideo_{0}.mp4", timeStamp);
+            //string timeStamp = Time.time.ToString().Replace(".", "").Replace(":", "");
+            string filename = string.Format("Video_{0}.mp4", timestamp);
             string filepath = System.IO.Path.Combine(Application.persistentDataPath, filename);
             filepath = filepath.Replace("/", @"\");
             m_VideoCapture.StartRecordingAsync(filepath, OnStartedRecordingVideo);
@@ -133,7 +135,7 @@ namespace Microsoft.MixedReality.Toolkit.Input
                                  System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"));*/
 
 
-            string filename = string.Format(@"Log.txt");
+            string filename = string.Format(@"Log_{0}.txt", timestamp);
             string filePath = System.IO.Path.Combine(Application.persistentDataPath, filename);
             return filePath;
 
